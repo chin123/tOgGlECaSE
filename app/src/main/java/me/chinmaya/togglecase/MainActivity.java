@@ -20,12 +20,23 @@ public class MainActivity extends AppCompatActivity {
         TextView t = findViewById(R.id.convertText);
         String a = t.getText().toString();
         String b = "";
+        double heuristic;
+        boolean isUpperCase = true;
         for (char cur: a.toCharArray()) {
             double prob = Math.random();
-            if (prob >= 0.5) {
+            if (b.equals("")) {
+                heuristic = 0.0;
+            } else if (isUpperCase) {
+                heuristic = 0.25;
+            } else {
+                heuristic = -0.25;
+            }
+            if (prob >= 0.5 + heuristic) {
                 b += Character.toUpperCase(cur);
+                isUpperCase = true;
             } else {
                 b += Character.toLowerCase(cur);
+                isUpperCase = false;
             }
         }
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
